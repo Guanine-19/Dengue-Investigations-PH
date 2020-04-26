@@ -1,0 +1,2095 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <title>Dengue Investigations PH</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Serif&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
+	<!-----------counter--------------->
+	<script src="jquery.counterup.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+  	<script>
+    jQuery(document).ready(function( $ ) {
+        $('.counter').counterUp({
+            delay: 30,
+            time: 1500
+        });
+	});
+
+ 	</script>
+    <link href='style.css' type="text/css" rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; overflow-x: hidden;}
+        #map {position:fixed ; width:100%; top:0; bottom: 0;}
+        .mapboxgl-popup {
+            max-width: 400px;
+            font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+            }
+    </style>
+</head>
+<body>
+
+  <div style="z-index: 20; position: absolute; width: 200px; height: 200px; display:block;">
+    <a href="#"><img style="bottom: 0; right: 0; height: 50px; position: fixed; margin: 30px; opacity: .80;" src="img/backtotop.svg"></a>
+  </div>
+
+
+<div style="display: inline-block;">
+<!--..................... DENGUE CASES PAGE ......................-->
+<div id='hero'>
+    <img src="img/title.svg">
+</div>
+<div style="display:block; position: relative; height: 100vh; background: transparent;">
+</div>
+<!--.......................DENGUE CASES PAGE......................-->
+
+<!--..................... INTRODUCTION ......................-->
+
+<div id = 'intro'>
+
+</br>
+    <h2 style="color:#F26430; text-align: center;">WHY DENGUE?</h2>
+    <p style="margin-left: 20%; margin-right: 20%;"> Dengue is a serious health concern locally and globally. It has been documented on every continent except Antarctica and the earliest documented case in Southeast Asia was in Manila in 1954. According to the Center for Disease Control and Prevention (CDC), 40% of the world’s population live in areas with risk of dengue. This virus is spread through the bite of an infected <i> Aedes </i> species mosquito and according to their data, the Philippines has frequent outbreaks or continuous transmission of this virus.</p>
+    <p style="margin-left: 20%; margin-right: 20%;">As of July 2015, The Department of Health (DOH) declared a National Dengue Alert as dengue cases continued to rise in several regions in the country (MIMAROPA, Western Visayas, Central Visayas, and Northern Mindanao). Data shows that as of August 2019, incidences of dengue almost doubled from 2018 (from 181,821 to 248,072).</p>
+    <p style="margin-left: 20%; margin-right: 20%;">This story map will show the incidences of dengue in the Philippines from 2013 to 2019 (January to August) which was retrieved from the Department of Health. It will show the years with the highest number of cases which we will link to possible causes.</p>
+    </br></br></br>
+    <div id="container0">
+      <canvas id="myChart0"></canvas>
+    </div>
+</br></br></br></br></br>
+</div>
+
+
+
+<!--.......................INTRODUCTION......................-->
+
+
+<!-- map background color -->
+<div style="background-color: #ddd;">
+<!--                      -->
+
+<div id='map'></div>
+
+<!--................. RIGHT SIDE ....................-->
+<section style="opacity: 0; height: 0; background-color: transparent">
+    <section id='initposition' style="opacity: 0; height: 0; background-color: transparent">
+    </section>
+</section>
+</br></br></br></br></br>
+
+<section style="margin-left: 55%; width: 40%;">
+    <section id='rcar'>
+        <h3>Cordillera Administrative Region (CAR)</h3>
+      </br>
+        <div class="row">
+            <div class="column">
+                <p>Highest<br>Number of Cases</p>
+                <h4 class="counter" style="visibility:hidden;">10,403</h4>
+                <p>Year: 2015</p>
+            </div>
+            <div class="column">
+                <p>Highest<br>Number of Deaths</p>
+                <h4 class="counter" style="visibility:hidden;">17</h4>
+                <p>Year: 2013</p>
+            </div>
+            <div class="column">
+                <p>Highest<br>Death Rate</p>
+                <h4 class="counter" style="visibility:hidden;">0.3257</h4>
+                <p>Year: 2017</p>
+            </div>
+        </div>
+				</br></br>
+				<div class="container">
+					<canvas id="myChart"></canvas>
+				</div>
+				</br>
+        <p class="desc">The Cordillera Administrative Region (CAR) consists of six provinces namely Abra, Apayao, Benguet, Ifugao, Kalinga, and Mountain Province and one city, Baguio, which is the regional center and the Summer Capital of the Philippines. Its rugged terrain and breath-taking topography have been home to the sturdy and industrious indigenous tribes collectively called the Igorot. It is a home to about 3.36 million Filipinos as of 2015.</p>
+    </br>
+    </section>
+</section>
+</br></br></br></br></br>
+<section style="margin-left: 55%; width: 40%;">
+    <section id='rncr'>
+      <h3>National Capital Region (NCR)</h3>
+      </br>
+				<div class="row">
+						<div class="column">
+								<p>Highest<br>Number of Cases</p>
+								<h4 class="counter" style="visibility:hidden;">28,040</h4>
+								<p>Year: 2018</p>
+						</div>
+						<div class="column">
+								<p>Highest<br>Number of Deaths</p>
+								<h4 class="counter" style="visibility:hidden;">180</h4>
+								<p>Year: 2018</p>
+						</div>
+						<div class="column">
+								<p>Highest<br>Death Rate</p>
+								<h4 class="counter" style="visibility:hidden;">0.6419</h4>
+								<p>Year: 2018</p>
+						</div>
+				</div>
+				</br></br>
+				<div class="container1">
+					<canvas id="myChart1"></canvas>
+				</div>
+      </br>
+        <p class="desc">The National Capital Region (NCR), also known as Metropolitan Manila is the country’s political, economic, and educational center. It is the smallest region in the Philippines and the most densely populated region which is a home to over 12.8 million Filipinos as of 2015. It has sixteen (16) highly urbanized cities composed of Manila, Quezon City, Caloocan, Las Piñas, Makati, Malabon, Mandaluyong, Marikina, Muntinlupa, Navotas, Parañaque, Pasay, Pasig, San Juan, Taguig, and Valenzuela.</p>
+    </br>
+    </section>
+</section>
+</br></br></br></br></br>
+<section style="margin-left: 55%; width: 40%;">
+    <section id='r1'>
+        <h3>Region 1 (Ilocos Region)</h3>
+        </br>
+				<div class="row">
+            <div class="column">
+                <p>Highest<br>Number of Cases</p>
+                <h4 class="counter" style="visibility:hidden;">17,605</h4>
+                <p>Year: 2015</p>
+            </div>
+            <div class="column">
+                <p>Highest<br>Number of Deaths</p>
+                <h4 class="counter" style="visibility:hidden;">52</h4>
+                <p>Year: 2018</p>
+            </div>
+            <div class="column">
+                <p>Highest<br>Death Rate</p>
+                <h4 class="counter" style="visibility:hidden;">0.3687</h4>
+                <p>Year: 2018</p>
+            </div>
+        </div>
+        				</br></br>
+				<div class="container2">
+					<canvas id="myChart2"></canvas>
+				</div>
+        </br>
+        <p class="desc">The Ilocos Region or Region I is in the northwestern region portion of Luzon. It is bounded by the Cordillera Administrative Region and Cagayan Valley to the east, Central Luzon to the south and by the South China Sea to the west. The region is composed of four provinces, namely: Ilocos Norte, Ilocos Sur, La Union and Pangasinan. Its regional center is San Fernando City, La Union. In 2015, the region had a population of 5 million.</p>
+
+    </br>
+    </section>
+</section>
+</br></br></br></br></br>
+<section style="margin-left: 55%; width: 40%;">
+    <section id='r2'>
+        <h3>Region 2 (Cagayan Valley)</h3>
+        </br>
+				<div class="row">
+						<div class="column">
+								<p>Highest<br>Number of Cases</p>
+								<h4 class="counter" style="visibility:hidden;">15,946</h4>
+								<p>Year: 2013</p>
+						</div>
+						<div class="column">
+								<p>Highest<br>Number of Deaths</p>
+								<h4 class="counter" style="visibility:hidden;">44</h4>
+								<p>Year: 2018</p>
+						</div>
+						<div class="column">
+								<p>Highest<br>Death Rate</p>
+								<h4 class="counter" style="visibility:hidden;">0.6408</h4>
+								<p>Year: 2017</p>
+						</div>
+				</div>
+        				</br></br>
+				<div class="container3">
+					<canvas id="myChart3"></canvas>
+				</div>
+        </br>
+				<p class="desc">Region II or the Cagayan Valley Region is strategically located on the northeastern part of mainland Luzon. It is composed of five Philippine provinces: Batanes, Cagayan, Isabela, Nueva Vizcaya, and Quirino. The region has four official cities: Cauayan, Isabela, Ilagan, Santiago, and Tuguegarao. Cagayan Valley is the second largest Philippine administrative region by land area, second to MIMAROPA. Based on the 2015 Census of Population, the region had a total population of 11.2 million.</p>
+
+    </br>
+    </section>
+</section>
+</br></br></br></br></br>
+<section style="margin-left: 55%; width: 40%;">
+    <section id='r3'>
+        <h3>Region 3 (Central Luzon)</h3>
+        </br>
+				<div class="row">
+						<div class="column">
+								<p>Highest<br>Number of Cases</p>
+								<h4 class="counter" style="visibility:hidden;">37,047</h4>
+								<p>Year: 2015</p>
+						</div>
+						<div class="column">
+								<p>Highest<br>Number of Deaths</p>
+								<h4 class="counter" style="visibility:hidden;">82</h4>
+								<p>Year: 2017</p>
+						</div>
+						<div class="column">
+								<p>Highest<br>Death Rate</p>
+								<h4 class="counter" style="visibility:hidden;">0.3309</h4>
+								<p>Year: 2016</p>
+						</div>
+				</div>
+        				</br></br>
+				<div class="container4">
+					<canvas id="myChart4"></canvas>
+				</div>
+        </br>
+				<p class="desc">Central Luzon has a very diverse cultural heritage and colorful traditions, owing to the influence of Spanish, American and Japanese colonizers, as well as the presence of different ethnolinguistic groups – Aetas, Sambals, Capampangangs, Tagalogs, Ilocanos and Pangasinenses. The region contains the largest plain in the country and produces most of the country's rice supply, earning itself the nickname "Rice Granary of the Philippines". It has a population of 10.14 million Filipinos as of 2015. Its seven provinces are: Aurora, Bataan, Bulacan, Nueva Ecija, Pampanga, Tarlac and Zambales and its fourteen cities are: Balanga, Malolos, Meycauayan, San Jose del Monte, Cabanatuan, Gapan, Muñoz, Palayan, San Jose Angeles, Mabalacat, San Fernando, Tarlac, and Olongapo.</p>
+
+    </br>
+    </section>
+</section>
+</br></br></br></br></br>
+<section style="margin-left: 55%; width: 40%;">
+    <section id='r4a'>
+        <h3>Region 4A (CALABARZON)</h3>
+        </br>
+				<div class="row">
+						<div class="column">
+								<p>Highest<br>Number of Cases</p>
+								<h4 class="counter" style="visibility:hidden;">39,810</h4>
+								<p>Year: 2019</p>
+						</div>
+						<div class="column">
+								<p>Highest<br>Number of Deaths</p>
+								<h4 class="counter" style="visibility:hidden;">135</h4>
+								<p>Year: 2018</p>
+						</div>
+						<div class="column">
+								<p>Highest<br>Death Rate</p>
+								<h4 class="counter" style="visibility:hidden;">0.5252</h4>
+								<p>Year: 2018</p>
+						</div>
+				</div>
+        				</br></br>
+				<div class="container5">
+					<canvas id="myChart5"></canvas>
+				</div>
+        </br>
+				<p class="desc">Region IV-A or CALABARZON, is an administrative region in the Philippines. The region comprises five provinces: Cavite, Laguna, Batangas, Rizal, and Quezon, and one highly urbanized city, Lucena. The region is the most populous region in the Philippines according to the Philippine Statistics Authority (PSA), having over 14.4 million people inhabitants in 2015, and is also the country's second most densely populated after Metro Manila.</p>
+
+    </br>
+    </section>
+</section>
+</br></br></br></br></br>
+<section style="margin-left: 55%; width: 40%;">
+    <section id='r4b'>
+        <h3>Region 4B (MIMAROPA)</h3>
+        </br>
+				<div class="row">
+						<div class="column">
+								<p>Highest<br>Number of Cases</p>
+								<h4 class="counter" style="visibility:hidden;">7,272</h4>
+								<p>Year: 2019</p>
+						</div>
+						<div class="column">
+								<p>Highest<br>Number of Deaths</p>
+								<h4 class="counter" style="visibility:hidden;">49</h4>
+								<p>Year: 2018</p>
+						</div>
+						<div class="column">
+								<p>Highest<br>Death Rate</p>
+								<h4 class="counter" style="visibility:hidden;">0.6910</h4>
+								<p>Year: 2018</p>
+						</div>
+				</div>
+        				</br></br>
+				<div class="container6">
+					<canvas id="myChart6"></canvas>
+				</div>
+</br>
+				<p class="desc">Region IV-B, also known as MIMAROPA, located at the heart of the archipelago is dubbed as the Treasure Trove of Southern Luzon. The name is an acronym that stands for its provinces, which are: Mindoro Occidental, Mindoro Oriental, Marinduque, Romblon, and Palawan. There are only two cities in the entire region: Calapan City in Oriental Mindoro and Puerto Princesa City in Palawan. According to the PSA, as of 2015, the region has over 2.96 million population.</p>
+
+    </br>
+    </section>
+</section>
+</br></br></br></br></br>
+<section style="margin-left: 55%; width: 40%;">
+    <section id='r5'>
+        <h3>Region 5 (Bicol Region)</h3>
+        </br>
+				<div class="row">
+						<div class="column">
+								<p>Highest<br>Number of Cases</p>
+								<h4 class="counter" style="visibility:hidden;">6,976</h4>
+								<p>Year: 2019</p>
+						</div>
+						<div class="column">
+								<p>Highest<br>Number of Deaths</p>
+								<h4 class="counter" style="visibility:hidden;">52</h4>
+								<p>Year: 2019</p>
+						</div>
+						<div class="column">
+								<p>Highest<br>Death Rate</p>
+								<h4 class="counter" style="visibility:hidden;">0.9815</h4>
+								<p>Year: 2018</p>
+						</div>
+				</div>
+        				</br></br>
+				<div class="container7">
+					<canvas id="myChart7"></canvas>
+				</div>
+        </br>
+				<p class="desc">Region V or Bicol Region is located in the southernmost tip of Luzon which is the mid section of the country. The region is the gateway of Luzon to the Visayas and Mindanao is composed of four contiguous provinces: Albay, Camarines Sur, Camarines Norte, and Sorsogon; two island provinces of Catanduanes and Masbate; and seven cities namely, Legazpi, Naga, Iriga, Tabaco, Ligao, Sorsogon, and Masbate. It is a home to 5.79 million Filipinos.</p>
+
+    </br>
+    </section>
+</section>
+</br></br></br></br></br>
+<section style="margin-left: 55%; width: 40%;">
+    <section id='r6'>
+        <h3>Region 6 (Western Visayas)</h3>
+        </br>
+				<div class="row">
+						<div class="column">
+								<p>Highest<br>Number of Cases</p>
+								<h4 class="counter" style="visibility:hidden;">45,345</h4>
+								<p>Year: 2019</p>
+						</div>
+						<div class="column">
+								<p>Highest<br>Number of Deaths</p>
+								<h4 class="counter" style="visibility:hidden;">2019</h4>
+								<p>Year: 2019</p>
+						</div>
+						<div class="column">
+								<p>Highest<br>Death Rate</p>
+								<h4 class="counter" style="visibility:hidden;">0.8348</h4>
+								<p>Year: 2017</p>
+						</div>
+				</div>
+        				</br></br>
+				<div class="container8">
+					<canvas id="myChart8"></canvas>
+				</div>
+        </br>
+				<p class="desc">Region VI or Western Visayas consists of six provinces (Aklan, Antique, Capiz, Guimaras, Iloilo and Negros Occidental) and two highly urbanized cities (Bacolod City and Iloilo City). The regional center is Iloilo City and has a population of 7.53 million inhabitants making it the most populous region in the Visayas.</p>
+
+    </br>
+    </section>
+</section>
+</br></br></br></br></br>
+<section style="margin-left: 55%; width: 40%;">
+    <section id='r7'>
+        <h3>Region 7 (Central Visayas)</h3>
+        </br>
+				<div class="row">
+						<div class="column">
+								<p>Highest<br>Number of Cases</p>
+								<h4 class="counter" style="visibility:hidden;">26,318</h4>
+								<p>Year: 2016</p>
+						</div>
+						<div class="column">
+								<p>Highest<br>Number of Deaths</p>
+								<h4 class="counter" style="visibility:hidden;">232</h4>
+								<p>Year: 2016</p>
+						</div>
+						<div class="column">
+								<p>Highest<br>Death Rate</p>
+								<h4 class="counter" style="visibility:hidden;">0.8815</h4>
+								<p>Year: 2016</p>
+						</div>
+				</div>
+        				</br></br>
+				<div class="container9">
+					<canvas id="myChart9"></canvas>
+				</div>
+        </br>
+				<p class="desc">Region VII or Central Visayas is the second smallest region in the Philippines. It consists of four provinces (Cebu, Bohol, Negros Oriental, and Siquijor) and three highly urbanized cities (Cebu City, Lapu-Lapu, and Mandaue). Major islands are the eponymous Cebu, Bohol, and Siquijor, together with the eastern part of Negros. The regional center and largest city is Cebu City. As of 2015, it had a population of 6 million.</p>
+
+    </br>
+    </section>
+</section>
+</br></br></br></br></br>
+<section style="margin-left: 55%; width: 40%;">
+    <section id='r8'>
+        <h3>Region 8 (Eastern Visayas)</h3>
+        </br>
+				<div class="row">
+						<div class="column">
+								<p>Highest<br>Number of Cases</p>
+								<h4 class="counter" style="visibility:hidden;">18,107</h4>
+								<p>Year: 2015</p>
+						</div>
+						<div class="column">
+								<p>Highest<br>Number of Deaths</p>
+								<h4 class="counter" style="visibility:hidden;">52</h4>
+								<p>Year: 2019</p>
+						</div>
+						<div class="column">
+								<p>Highest<br>Death Rate</p>
+								<h4 class="counter" style="visibility:hidden;">0.5601</h4>
+								<p>Year: 2017</p>
+						</div>
+				</div>
+        				</br></br>
+				<div class="container10">
+					<canvas id="myChart10"></canvas>
+				</div>
+</br>
+				<p class="desc">Region VIII or Eastern Visayas is composed of three main islands, Leyte and Samar, connected by the San Juanico Bridge, and Biliran Island. It consists of six provinces, one independent city and one highly urbanized city namely, Biliran, Eastern Samar, Leyte, Northern Samar, Samar, Southern Leyte, Ormoc City and Tacloban. The Highly Urbanized City of Tacloban is Eastern Visayas Regional Center (EVRC). According to the PSA (2015), the region had a total population of 4.44 million.</p>
+
+    </br>
+    </section>
+</section>
+</br></br></br></br></br>
+<section style="margin-left: 55%; width: 40%;">
+    <section id='r9'>
+        <h3>Region 9 (Zamboanga Peninsula)</h3>
+        </br>
+				<div class="row">
+						<div class="column">
+								<p>Highest<br>Number of Cases</p>
+								<h4 class="counter" style="visibility:hidden;">18,505</h4>
+								<p>Year: 2019</p>
+						</div>
+						<div class="column">
+								<p>Highest<br>Number of Deaths</p>
+								<h4 class="counter" style="visibility:hidden;">94</h4>
+								<p>Year: 2019</p>
+						</div>
+						<div class="column">
+								<p>Highest<br>Death Rate</p>
+								<h4 class="counter" style="visibility:hidden;">0.9989</h4>
+								<p>Year: 2018</p>
+						</div>
+				</div>
+        				</br></br>
+				<div class="container11">
+					<canvas id="myChart11"></canvas>
+				</div>
+        </br>
+				<p class="desc">Region 9, also known as the Zamboanga Peninsula Region lies at the Southernmost portion of the Philippine archipelago. It is composed of three provinces - Zamboanga del Norte, Zamboanga Sibugay, and Zamboanga del Sur; and five cities - Dapitan, Dipolog, Pagadian, Zamboanga, and Isabela. It is a home to 3.62 million Filipinos as of 2015.</p>
+
+    </br>
+    </section>
+</section>
+</br></br></br></br></br>
+<section style="margin-left: 55%; width: 40%;">
+    <section id='r10'>
+        <h3>Region 10 (Northern Mindanao)</h3>
+        </br>
+				<div class="row">
+						<div class="column">
+								<p>Highest<br>Number of Cases</p>
+								<h4 class="counter" style="visibility:hidden;">19,925</h4>
+								<p>Year: 2019</p>
+						</div>
+						<div class="column">
+								<p>Highest<br>Number of Deaths</p>
+								<h4 class="counter" style="visibility:hidden;">76</h4>
+								<p>Year: 2019</p>
+						</div>
+						<div class="column">
+								<p>Highest<br>Death Rate</p>
+								<h4 class="counter" style="visibility:hidden;">0.9140</h4>
+								<p>Year: 2013</p>
+						</div>
+				</div>
+				<div class="container12">
+          				</br></br>
+					<canvas id="myChart12"></canvas>
+				</div>
+        </br>
+				<p class="desc">Region X or Northern Mindanao is an administrative region in the Philippines which comprises of five provinces: Bukidnon, Camiguin, Misamis Occidental, Misamis Oriental, and Lanao del Norte, and two cities classified as highly urbanized, all occupying the north-central part of Mindanao island, and the island-province of Camiguin. The regional center is Cagayan de Oro and the region had a population of 4.69 million as of 2015.</p>
+
+    </br>
+    </section>
+</section>
+</br></br></br></br></br>
+<section style="margin-left: 55%; width: 40%;">
+    <section id='r11'>
+        <h3>Region 11 (Davao Region)</h3>
+        </br>
+				<div class="row">
+						<div class="column">
+								<p>Highest<br>Number of Cases</p>
+								<h4 class="counter" style="visibility:hidden;">11,667</h4>
+								<p>Year: 2016</p>
+						</div>
+						<div class="column">
+								<p>Highest<br>Number of Deaths</p>
+								<h4 class="counter" style="visibility:hidden;">94</h4>
+								<p>Year: 2016</p>
+						</div>
+						<div class="column">
+								<p>Highest<br>Death Rate</p>
+								<h4 class="counter" style="visibility:hidden;">0.8057</h4>
+								<p>Year: 2016</p>
+						</div>
+				</div>
+        				</br></br>
+				<div class="container13">
+					<canvas id="myChart13"></canvas>
+				</div>
+        </br>
+				<p class="desc">Davao Region or region XI, formerly called Southern Mindanao is an administrative region comprising of five provinces: Davao de Oro, Davao del Norte, Davao del Sur, Davao Oriental, and Davao Occidental. The region encloses the Davao Gulf, and its regional center is Davao City. The region is home to 4.9 million Filipinos according to the PSA as of 2015.</p>
+
+    </br>
+    </section>
+</section>
+</br></br></br></br></br>
+<section style="margin-left: 55%; width: 40%;">
+    <section id='r12'>
+        <h3>Region 12 (SOCCSKSARGEN)</h3>
+        </br>
+				<div class="row">
+						<div class="column">
+								<p>Highest<br>Number of Cases</p>
+								<h4 class="counter" style="visibility:hidden;">17,937</h4>
+								<p>Year: 2016</p>
+						</div>
+						<div class="column">
+								<p>Highest<br>Number of Deaths</p>
+								<h4 class="counter" style="visibility:hidden;">77</h4>
+								<p>Year: 2016</p>
+						</div>
+						<div class="column">
+								<p>Highest<br>Death Rate</p>
+								<h4 class="counter" style="visibility:hidden;">0.5520</h4>
+								<p>Year: 2014</p>
+						</div>
+				</div>
+        				</br></br>
+				<div class="container14">
+					<canvas id="myChart14"></canvas>
+				</div>
+        </br>
+				<p class="desc">Region 12 or SOCCSKSARGEN Region is located in South Central Mindanao. It is composed of 4 provinces namely: South Cotabato, Cotabato, Sultan Kudarat and Sarangani as well as 5 cities namely: General Santos, Cotabato, Koronadal, Tacurong AND Kidapawan. Over 4.54 million Filipinos are situated here as of 2015.</p>
+
+    </br>
+    </section>
+</section>
+</br></br></br></br></br>
+<section style="margin-left: 55%; width: 40%;">
+    <section id='rcaraga'>
+        <h3>Region 13 (Caraga Region)</h3>
+        </br>
+				<div class="row">
+						<div class="column">
+								<p>Highest<br>Number of Cases</p>
+								<h4 class="counter" style="visibility:hidden;">8,618</h4>
+								<p>Year: 2014</p>
+						</div>
+						<div class="column">
+								<p>Highest<br>Number of Deaths</p>
+								<h4 class="counter" style="visibility:hidden;">43</h4>
+								<p>Year: 2014</p>
+						</div>
+						<div class="column">
+								<p>Highest<br>Death Rate</p>
+								<h4 class="counter" style="visibility:hidden;">0.8071</h4>
+								<p>Year: 2013</p>
+						</div>
+				</div>
+        				</br></br>
+				<div class="container15">
+					<canvas id="myChart15"></canvas>
+				</div>
+        </br>
+				<p class="desc">Caraga is named after the Kalagan people (Spanish "Caragan"), a Mansakan subgroup (related to Visayans) native to the regions of Davao and parts of Caraga who speak the Kalagan languages. Caraga is composed of five provinces: Agusan del Norte, Agusan del Sur, Surigao del Norte, Surigao del Sur and Dinagat Islands; six cities: Butuan City, Cabadbaran, Surigao, Tandag, Bislig and Bayugan. Butuan City is the regional administrative center. The region had a total population of 2.93 million as of 2015.</p>
+    </br>
+    </section>
+</section>
+</br></br></br></br></br>
+<section style="margin-left: 55%; width: 40%;">
+    <section id='rarmm'>
+        <h3>ARMM (Autonomous Region in Muslim Mindanao)</h3>
+        </br>
+				<div class="row">
+						<div class="column">
+								<p>Highest<br>Number of Cases</p>
+								<h4 class="counter" style="visibility:hidden;">3,456</h4>
+								<p>Year: 2019</p>
+						</div>
+						<div class="column">
+								<p>Highest<br>Number of Deaths</p>
+								<h4 class="counter" style="visibility:hidden;">26</h4>
+								<p>Year: 2019</p>
+						</div>
+						<div class="column">
+								<p>Highest<br>Death Rate</p>
+								<h4 class="counter" style="visibility:hidden;">1.2690</h4>
+								<p>Year: 2016</p>
+						</div>
+				</div>
+        				</br></br>
+				<div class="container16">
+					<canvas id="myChart16"></canvas>
+				</div>
+        </br>
+				<p class="desc">The Autonomous Region in Muslim Mindanao involves five dominatingly Muslim areas: Basilan (aside from Isabela City), Lanao del Sur, Maguindanao, Sulu and Tawi-Tawi. It is the main area that has its own particular government. The locale's accepted seat of government is Cotabato City, in spite of the fact that this self-administering city is outside of its ward. According to the PSA (2015), it had a total population of 3.78 million.</p>
+
+    </br>
+    </section>
+</section>
+</br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
+<section style="opacity: 0; height: 10px; background-color: transparent">
+    <section id='backtoinitposition' style="opacity: 0; height: 0; background-color: transparent">
+    </section>
+</section>
+
+<section  style="opacity: 0.9; background-color: black; padding-left: 20%; padding-right: 20%;">
+
+    <section id='footer' style="height: auto ; background-color: transparent; opacity: 1;">
+		<h2 style="color:#F26430; text-align: center;">Conclusion</h2>
+		<h4 style="color: white; font-size: 2em;">Top 3 Years with the Highest Totaled Number of Dengue Cases</h4>
+		<div class="row" >
+				<div style="margin-left: 14%;" class="column">
+						<p style="font-size: 1.5em; line-height: 10px;">2018</p>
+						<h4 style="font-size: 2em;" class="counter">182,607</h4>
+				</div>
+				<div class="column" style="width: 30vh; height: 30vh;">
+						<p style="font-size: 2em; line-height: 20px;">2019</p>
+						<h4 style="font-size: 3em;" class="counter" class="counter">248,072</h4>
+				</div>
+				<div class="column">
+						<p style="font-size: 1.5em; line-height: 10px;">2016</p>
+						<h4 style="font-size: 2em;" class="counter" class="counter">181,821</h4>
+				</div>
+		</div>
+        <p>According to the Philippines Atmospheric, Geophysical and Astronomical Services Administration (PAG-ASA), The climate of the Philippines is tropical and maritime. It is characterized by relatively high temperature, high humidity and abundant rainfall which are perfect climactic factors for the growth of the <em>Aedes aegypti </em>mosquito. According to the research conducted by Lai (2018), temperature, accumulated rainfall, and sunshine play an important role in the transmission cycles of dengue fever. As temperature increases, the <em>Aedes aegypti</em> mosquito displays shorter periods of development in all stages of their life cycle, which leads to increased population growth. Rainfall creates abundant outdoor breeding sources for <em>Aedes aegypti</em>, and the water storage containers also can serve as breeding habitats.</p>
+		<p>In relation to this, one factor that may be attributed to this doubling of incidences in the Philippines is because of global warming. Global warming is causing measurable effects such as increase in temperature and increase in annual rainfall which are both favorable to the growth of the mosquitoes aforementioned.</p>
+		<p>Most of all, what highlights this story map is that there is a need to call for action since the number of deaths in almost all regions hit their highest in the year 2018 to 2019 which either means that there is a serious problem with public health awareness or dengue prevention and control by the government.</p>
+		<p>Dengue is a serious public health concern which can lead to death. There is no specific treatment for it thus prevention and control through effective vector control measures is an utmost priority.</p>
+		<br><br><br><br><br><br>
+    </section>
+</section>
+
+<section  style="filter: alpha(opacity=30); opacity: 1; background-color: #1A2624; padding-left: 20%; padding-right: 20%;">
+    <section id='solutions' style="height: auto ; background-color: transparent; opacity: 1;">
+        <h2 style="text-align: center; color: #F26430">Possible Solutions</h2>
+		<iframe width="800" height="480" src="https://www.youtube.com/embed/PJfBmHgSxBA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+		<p style="font-family: 'IBM Plex Serif', sans-serif; font-size: 1.2em; text-align: center; margin-bottom: 8%;">Singapore is breeding an army of 'good' mosquitoes.</p>
+		<iframe width="800" height="480" src="https://www.youtube.com/embed/_hKqHfJONgw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+		<p style="font-family: 'IBM Plex Serif', sans-serif; font-size: 1.2em; text-align: center; margin-bottom: 8%;">Sena Saylan explains how scientists at the World Mosquito Programme are trying to tackle this crisis.</p>
+		<iframe width="800" height="480" src="https://www.youtube.com/embed/VR3AM4BHSnw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+		<p style="font-family: 'IBM Plex Serif', sans-serif; font-size: 1.2em; text-align: center; margin-bottom: 8%;">A molecular biology approach to generate genetically sterilised mosquitoes as a means of preventing the spread of Dengue infection.</p>
+    </section>
+    <center>
+    <h4 style="color: #F26430"> REFERENCES </h4>
+    <p style="text-align: center"> Department Of Health </p>
+    <p style="text-align: center"> Department of Trade and Industry</p>
+    <p style="text-align: center"> PAGASA </p>
+    <p style="text-align: center"> Lai Y. H. (2018). The climatic factors affecting dengue fever outbreaks in southern Taiwan: an application of symbolic data analysis. Biomedical engineering online, 17(Suppl 2), 148. doi:10.1186/s12938-018-0575-4 </p>
+    <p style="text-align: center"> Wikipedia. (n.d.) Philippine Regions. Retrieved December 13, 2019 from https://en.wikipedia.org/wiki/Regions_of_the_Philippines </p>
+  </center>
+</section>
+
+<section id="footerfooter" style="background-color: black; height: 50px; opacity: 1;">
+
+        <p style="color: cyan; text-align: center;">Copyright © 2019 Dengue Investigations PH are trademarks or registered</p>
+    </section>
+</div>
+
+
+</div>
+<script>
+
+
+//This is a variable that contains an access key to use the services from Mapbox. Please make sure you create an account and replace what's in the quotes with your own key"
+//The key shown here is a one-time use key for this tutorial. It will expire on 7/1/2017
+mapboxgl.accessToken = 'pk.eyJ1IjoiZ3V3ZW5uZSIsImEiOiJjazNvamd1ODExdXVwM2Vya3k2cjFvbmFvIn0.qynVApkEUs1yAIT1cd5uVA';
+
+//This function create the map to load onto your web browser
+
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/guwenne/ck3l89e9a28es1cs4ut18iupf', //hosted style id
+    center: [127.894,9.908],
+    zoom: 5.24,
+    bearing: 24.3,
+    pitch: 0,
+    hash:true,
+    interactive: false,
+    scrollZoom: false,
+});
+
+//This are the locations for your map to move along with your story
+//This is variable created an object called an JSON, you can add and remove chapters to the story. Make sure you reflect the changes in the sections with the text of your story.
+var chapters = {
+    'backtoinitposition': {
+        bearing: 0,
+        center: [124.1,10.779],//5.24/10.779/124.1/35.5
+        zoom: 5.24,
+        bearing: 35.5,
+        pitch: 0,
+    },
+    'initposition': {
+        bearing: 0,
+        center: [127.894,9.908],//5.24/10.779/124.1/35.5
+        zoom: 5.24,
+        bearing: 24.3,
+        pitch: 0,
+    },
+    'rcar': {
+        bearing: 0,
+        center: [122.264,16.732],//13.778/122.206
+        zoom: 7.19,
+        bearing: 24.3,
+        pitch: 0,
+    },
+    'rncr': {
+        center: [121.3568,14.4297],//9.19///24.3
+        zoom: 9.19,
+        bearing: 24.3,
+        pitch: 0,
+    },
+    'r1': {
+        bearing: 0,
+        center: [121.824,17.124],//7.05/17.124/121.824
+        zoom: 7.05,
+		pitch: 0,
+		speed: 0.5,
+    },
+    'r2': {
+        bearing: 0,
+        center: [123.026,17.208],//7.19/17.208/123.026
+        zoom: 7.19,
+		pitch: 0,
+		speed: 0.5,
+    },
+    'r3': {
+        bearing: 0,
+        center: [122.144,15.458],//7.49/15.458/122.144
+        zoom: 7.49,
+		pitch: 0,
+		speed: 0.5,
+    },
+    'r4a': {
+        bearing: 0,
+        center: [122.633,14.172],//7.64/14.172/122.633
+        zoom: 7.64,
+        pitch: 0,
+    },
+    'r4b': {
+        bearing: 0,
+        center: [122.747,10.749],//6.18/10.749/122.747
+        zoom: 6.18,
+        pitch: 0,
+    },
+    'r5': {
+        center: [124.71,13.053],//7.34/13.053/124.71
+        zoom: 7.34,
+        pitch: 0,
+    },
+    'r6': {
+        center: [123.862,10.75],//7.34/10.75/123.862
+        zoom: 7.34,
+        bearing: 0,
+        pitch: 0,
+    },
+    'r7': {
+        center: [124.77,10.185],//7.49/10.185/124.77
+        zoom: 7.49,
+        bearing: 0,
+        pitch: 0,
+    },
+    'r8': {
+        center: [126.31,11.341],//7.34/11.341/126.31
+        zoom: 7.34,
+        bearing: 0,
+        pitch: 0,
+    },
+    'r9': {
+        center: [123.857,7.767],//7.64/7.767/123.857
+        zoom: 7.64,
+        bearing: 0,
+        pitch: 0,
+    },
+    'r10': {
+        center: [125.498,8.318],//7.8/8.318/125.498
+        zoom: 7.8,
+        bearing: 0,
+        pitch: 0,
+    },
+    'r11': {
+        center: [127.108,6.683],//7.34/6.683/127.108
+        zoom: 7.34,
+        bearing: 0,
+        pitch: 0,
+    },
+    'r12': {
+        center: [125.87,6.63],//7.64/6.63/125.87
+        zoom: 7.64,
+        bearing: 0,
+        pitch: 0,
+    },
+    'rcaraga': {
+        center: [126.474,8.285],//7.64/8.285/126.474/48
+        zoom: 7.64,
+        bearing: 48,
+        pitch: 0,
+    },
+    'rarmm': {
+        center: [123.746,8.328],//7.34/8.328/123.746/-80.8/55
+        zoom: 7.34,
+        bearing: -80.8,
+        pitch: 55,
+    },
+};
+
+
+//Function to run the story
+// On every scroll event, check which element is on screen
+window.onscroll = function() {
+    var chapterNames = Object.keys(chapters);
+    for (var i = 0; i < chapterNames.length; i++) {
+        var chapterName = chapterNames[i];
+        if (isElementOnScreen(chapterName)) {
+            setActiveChapter(chapterName);
+            break;
+        } else if (window.scrollY>800 && window.scrollY<1200){
+			if (myChart0 === document.getElementById('myChart0').getContext('2d')) break;
+			myChart0 = document.getElementById('myChart0').getContext('2d');
+			let massPopChart21 = new Chart(myChart0, {
+      type:'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+      data:{
+        labels:['2013', '2014', '2015', '2016', '2017', '2018', '2019'],
+        datasets:[{
+          label:'Cases',
+          data:[
+            172751,
+            110069,
+            176723,
+            182607,
+            122336,
+            181821,
+            248072
+          ],
+          pointBackgroundColor: '#F26430',
+          backgroundColor:[
+            'white'
+          ],
+          borderWidth:1,
+          hoverBorderWidth:3,
+          hoverBorderColor:'#000'
+        }]
+        },
+        options:{
+          scales: {
+            xAxes: [{
+                ticks: {
+                    fontFamily: 'IBM Plex Serif',
+                    fontColor: 'white',
+                    fontSize: 10
+                },
+            }],
+            yAxes: [{
+                ticks: {
+                  fontFamily: 'IBM Plex Serif',
+                  fontColor: 'white',
+                  fontSize: 10
+                },
+            }],
+          },
+          title:{
+            display:true,
+            text:'TOTAL DENGUE CASES IN THE PHILIPPINES',
+            fontSize: 45,
+            fontColor:'#F26430',
+            fontFamily: 'Lato'
+          },
+          layout:{
+            padding:{
+              left:0,
+              right:0,
+              bottom:0,
+              top:0
+            }
+          },
+          tooltips:{
+            enabled:true
+          }
+        }
+      });
+    }
+  }
+}
+
+var activeChapterName = 'initposition'; //Change this to match the first chapter of your story
+function setActiveChapter(chapterName) {
+    if (chapterName === activeChapterName) return;
+    if (chapterName === 'footer') return;
+
+	map.flyTo(chapters[chapterName]);
+
+	var domx = document.getElementById(chapterName);
+	var domy = document.getElementById(activeChapterName);
+
+    document.getElementById(chapterName).style.animation = "elementfade 1s 1";
+    document.getElementById(chapterName).parentElement.style.animation = "elementfade 1s 1";
+    document.getElementById(chapterName).setAttribute('class', 'active');
+    document.getElementById(chapterName).parentElement.setAttribute('class', 'active');
+    document.getElementById(activeChapterName).setAttribute('class', '');
+    document.getElementById(activeChapterName).parentElement.setAttribute('class', '');
+    document.getElementById(activeChapterName).style.animation = "elementfadeout 1s 1";
+	document.getElementById(activeChapterName).parentElement.style.animation = "elementfadeout 1s 1";
+    map.setLayoutProperty(chapterName, 'visibility', 'visible');
+    map.setLayoutProperty(activeChapterName, 'visibility', 'none');
+
+	activeChapterName = chapterName;
+
+	// Global Options
+	Chart.defaults.global.defaultFontFamily = 'Lato';
+	Chart.defaults.global.defaultFontSize = 14;
+	Chart.defaults.global.defaultFontColor = 'white';
+	Chart.defaults.global.borderColor = 'white';
+	Chart.defaults.global.borderColor.hoverBorderColor = 'white';
+	Chart.defaults.global.pointBackgroundColor = 'white';
+
+	//ugly part
+
+
+
+	if (chapterName === 'rcar') {
+		document.getElementById(chapterName).getElementsByClassName("counter")[0].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[1].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[2].style.visibility = "visible";
+		let myChart = document.getElementById('myChart').getContext('2d');
+		let massPopChart = new Chart(myChart, {
+	type:'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+	data:{
+		labels:['2013', '2014', '2015', '2016', '2017', '2018', '2019'],
+		datasets:[{
+			label:'Ratio',
+			data:[
+				0.1950,
+				0.2711,
+				0.1057,
+				0.2116,
+				0.3257,
+				0.1738,
+				0.3225
+			],
+			pointBackgroundColor: 'white',
+			backgroundColor:[
+				'#F26430'
+			],
+			borderWidth:1,
+			hoverBorderWidth:3,
+			hoverBorderColor:'#000'
+		}]
+		},
+		options:{
+      scales: {
+        xAxes: [{
+            ticks: {
+                fontFamily: 'IBM Plex Serif',
+                fontColor: 'white',
+                fontSize: 10
+            },
+        }],
+        yAxes: [{
+            ticks: {
+              fontFamily: 'IBM Plex Serif',
+              fontColor: 'white',
+              fontSize: 10
+            },
+        }],
+      },
+			title:{
+				display:true,
+				text:'RATIO OF DEATHS TO CASES IN CAR',
+				fontSize:25
+			},
+			layout:{
+				padding:{
+					left:0,
+					right:0,
+					bottom:0,
+					top:0
+				}
+			},
+			tooltips:{
+				enabled:true
+			}
+		}
+	});
+	};
+
+	if (chapterName === 'rncr') {
+		document.getElementById(chapterName).getElementsByClassName("counter")[0].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[1].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[2].style.visibility = "visible";
+		let myChart1 = document.getElementById('myChart1').getContext('2d');
+		let massPopChart1 = new Chart(myChart1, {
+	type:'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+	data:{
+		labels:['2013', '2014', '2015', '2016', '2017', '2018', '2019'],
+		datasets:[{
+			label:'Ratio',
+			data:[
+				0.2219,
+				0.4928,
+				0.4290,
+				0.3797,
+				0.6101,
+				0.6419,
+				0.5128
+			],
+			pointBackgroundColor: 'white',
+			backgroundColor:[
+				'#F26430'
+			],
+			borderWidth:1,
+			borderColor:'#777',
+			hoverBorderWidth:3,
+			hoverBorderColor:'#000'
+		}]
+		},
+		options:{
+      scales: {
+        xAxes: [{
+            ticks: {
+                fontFamily: 'IBM Plex Serif',
+                fontColor: 'white',
+                fontSize: 10
+            },
+        }],
+        yAxes: [{
+            ticks: {
+              fontFamily: 'IBM Plex Serif',
+              fontColor: 'white',
+              fontSize: 10
+            },
+        }],
+      },
+			title:{
+				display:true,
+				text:'RATIO OF DEATHS TO CASES IN NCR',
+				fontSize:25
+			},
+			layout:{
+				padding:{
+					left:0,
+					right:0,
+					bottom:0,
+					top:0
+				}
+			},
+			tooltips:{
+				enabled:true
+			}
+		}
+	});
+	};
+
+	if (chapterName === 'r1') {
+		document.getElementById(chapterName).getElementsByClassName("counter")[0].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[1].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[2].style.visibility = "visible";
+		let myChart2 = document.getElementById('myChart2').getContext('2d');
+		let massPopChart2 = new Chart(myChart2, {
+		type:'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+		data:{
+			labels:['2013', '2014', '2015', '2016', '2017', '2018', '2019'],
+			datasets:[{
+				label:'Ratio',
+				data:[
+					0.2777,
+					0.2577,
+					0.2329,
+					0.2457,
+					0.2803,
+					0.3687,
+					0.2295
+
+				],
+				pointBackgroundColor: 'white',
+				backgroundColor:[
+					'#F26430'
+				],
+				borderWidth:1,
+				borderColor:'#777',
+				hoverBorderWidth:3,
+				hoverBorderColor:'#000'
+			}]
+			},
+			options:{
+        scales: {
+          xAxes: [{
+              ticks: {
+                  fontFamily: 'IBM Plex Serif',
+                  fontColor: 'white',
+                  fontSize: 10
+              },
+          }],
+          yAxes: [{
+              ticks: {
+                fontFamily: 'IBM Plex Serif',
+                fontColor: 'white',
+                fontSize: 10
+              },
+          }],
+        },
+				title:{
+					display:true,
+					text:'RATIO OF DEATHS TO CASES IN REGION I',
+					fontSize:25
+				},
+				layout:{
+					padding:{
+						left:0,
+						right:0,
+						bottom:0,
+						top:0
+					}
+				},
+				tooltips:{
+					enabled:true
+				}
+			}
+		});
+	};
+
+	if (chapterName === 'r2') {
+		document.getElementById(chapterName).getElementsByClassName("counter")[0].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[1].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[2].style.visibility = "visible";
+		let myChart3 = document.getElementById('myChart3').getContext('2d');
+		let massPopChart3 = new Chart(myChart3, {
+	type:'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+	data:{
+		labels:['2013', '2014', '2015', '2016', '2017', '2018', '2019'],
+		datasets:[{
+			label:'Ratio',
+			data:[
+				0.1693,
+				0.4411,
+				0.1227,
+				0.2843,
+				0.6408,
+				0.4360,
+				0.5372
+			],
+			pointBackgroundColor: 'white',
+			backgroundColor:[
+				'#F26430'
+			],
+			borderWidth:1,
+			borderColor:'#777',
+			hoverBorderWidth:3,
+			hoverBorderColor:'#000'
+		}]
+	},
+	options:{
+    scales: {
+      xAxes: [{
+          ticks: {
+              fontFamily: 'IBM Plex Serif',
+              fontColor: 'white',
+              fontSize: 10
+          },
+      }],
+      yAxes: [{
+          ticks: {
+            fontFamily: 'IBM Plex Serif',
+            fontColor: 'white',
+            fontSize: 10
+          },
+      }],
+    },
+		title:{
+			display:true,
+			text:'RATIO OF DEATHS TO CASES IN REGION II',
+			fontSize:25
+		},
+		layout:{
+			padding:{
+				left:0,
+				right:0,
+				bottom:0,
+				top:0
+			}
+		},
+		tooltips:{
+			enabled:true
+		}
+	}
+});
+	};
+
+	if (chapterName === 'r3') {
+		document.getElementById(chapterName).getElementsByClassName("counter")[0].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[1].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[2].style.visibility = "visible";
+		let myChart4 = document.getElementById('myChart4').getContext('2d');
+		let massPopChart4 = new Chart(myChart4, {
+	type:'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+	data:{
+		labels:['2013', '2014', '2015', '2016', '2017', '2018', '2019'],
+		datasets:[{
+			label:'Ratio',
+			data:[
+				0.1649,
+				0.1313,
+				0.1323,
+				0.3309,
+				0.3298,
+				0.2466,
+				0.2881
+			],
+			pointBackgroundColor: 'white',
+			backgroundColor:[
+				'#F26430'
+			],
+			borderWidth:1,
+			borderColor:'#777',
+			hoverBorderWidth:3,
+			hoverBorderColor:'#000'
+		}]
+	},
+	options:{
+    scales: {
+      xAxes: [{
+          ticks: {
+              fontFamily: 'IBM Plex Serif',
+              fontColor: 'white',
+              fontSize: 10
+          },
+      }],
+      yAxes: [{
+          ticks: {
+            fontFamily: 'IBM Plex Serif',
+            fontColor: 'white',
+            fontSize: 10
+          },
+      }],
+    },
+    title:{
+			display:true,
+			text:'RATIO OF DEATHS TO CASES IN REGION III',
+			fontSize:25
+		},
+		layout:{
+			padding:{
+				left:0,
+				right:0,
+				bottom:0,
+				top:0
+			}
+		},
+		tooltips:{
+			enabled:true
+		}
+	}
+});
+	};
+
+	if (chapterName === 'r4a') {
+		document.getElementById(chapterName).getElementsByClassName("counter")[0].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[1].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[2].style.visibility = "visible";
+		let myChart5 = document.getElementById('myChart5').getContext('2d');
+		let massPopChart5 = new Chart(myChart5, {
+	type:'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+	data:{
+		labels:['2013', '2014', '2015', '2016', '2017', '2018', '2019'],
+		datasets:[{
+			label:'Ratio',
+			data:[
+				0.2118,
+				0.1985,
+				0.3025,
+				0.4715,
+				0.4660,
+				0.5252,
+				0.3115
+			],
+			pointBackgroundColor: 'white',
+			backgroundColor:[
+				'#F26430'
+			],
+			borderWidth:1,
+			borderColor:'#777',
+			hoverBorderWidth:3,
+			hoverBorderColor:'#000'
+		}]
+	},
+	options:{
+    scales: {
+      xAxes: [{
+          ticks: {
+              fontFamily: 'IBM Plex Serif',
+              fontColor: 'white',
+              fontSize: 10
+          },
+      }],
+      yAxes: [{
+          ticks: {
+            fontFamily: 'IBM Plex Serif',
+            fontColor: 'white',
+            fontSize: 10
+          },
+      }],
+    },
+		title:{
+			display:true,
+			text:'RATIO OF DEATHS TO CASES IN REGION IV-A',
+			fontSize:25
+		},
+		layout:{
+			padding:{
+				left:0,
+				right:0,
+				bottom:0,
+				top:0
+			}
+		},
+		tooltips:{
+			enabled:true
+		}
+	}
+});
+	};
+
+	if (chapterName === 'r4b') {
+		document.getElementById(chapterName).getElementsByClassName("counter")[0].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[1].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[2].style.visibility = "visible";
+		let myChart6 = document.getElementById('myChart6').getContext('2d');
+		let massPopChart6 = new Chart(myChart6, {
+	type:'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+	data:{
+		labels:['2013', '2014', '2015', '2016', '2017', '2018', '2019'],
+		datasets:[{
+			label:'Ratio',
+			data:[
+				0.2741,
+				0.5789,
+				0.2753,
+				0.5083,
+				0.5119,
+				0.6910,
+				0.2613
+			],
+			pointBackgroundColor: 'white',
+			backgroundColor:[
+				'#F26430'
+			],
+			borderWidth:1,
+			borderColor:'#777',
+			hoverBorderWidth:3,
+			hoverBorderColor:'#000'
+		}]
+	},
+	options:{
+    scales: {
+      xAxes: [{
+          ticks: {
+              fontFamily: 'IBM Plex Serif',
+              fontColor: 'white',
+              fontSize: 10
+          },
+      }],
+      yAxes: [{
+          ticks: {
+            fontFamily: 'IBM Plex Serif',
+            fontColor: 'white',
+            fontSize: 10
+          },
+      }],
+    },
+		title:{
+			display:true,
+			text:'RATIO OF DEATHS TO CASES IN REGION IV-B',
+			fontSize:25
+		},
+		layout:{
+			padding:{
+				left:0,
+				right:0,
+				bottom:0,
+				top:0
+			}
+		},
+		tooltips:{
+			enabled:true
+		}
+	}
+});
+	};
+
+	if (chapterName === 'r5') {
+		document.getElementById(chapterName).getElementsByClassName("counter")[0].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[1].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[2].style.visibility = "visible";
+		let myChart7 = document.getElementById('myChart7').getContext('2d');
+		let massPopChart7 = new Chart(myChart7, {
+	type:'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+	data:{
+		labels:['2013', '2014', '2015', '2016', '2017', '2018', '2019'],
+		datasets:[{
+			label:'Ratio',
+			data:[
+				0.5045,
+				0.4723,
+				0.3972,
+				0.7028,
+				0.8150,
+				0.9815,
+				0.7454
+			],
+			pointBackgroundColor: 'white',
+			backgroundColor:[
+				'#F26430'
+			],
+			borderWidth:1,
+			borderColor:'#777',
+			hoverBorderWidth:3,
+			hoverBorderColor:'#000'
+		}]
+	},
+	options:{
+    scales: {
+      xAxes: [{
+          ticks: {
+              fontFamily: 'IBM Plex Serif',
+              fontColor: 'white',
+              fontSize: 10
+          },
+      }],
+      yAxes: [{
+          ticks: {
+            fontFamily: 'IBM Plex Serif',
+            fontColor: 'white',
+            fontSize: 10
+          },
+      }],
+    },
+		title:{
+			display:true,
+			text:'RATIO OF DEATHS TO CASES IN REGION V',
+			fontSize:25
+		},
+		layout:{
+			padding:{
+				left:0,
+				right:0,
+				bottom:0,
+				top:0
+			}
+		},
+		tooltips:{
+			enabled:true
+		}
+	}
+});
+	};
+
+	if (chapterName === 'r6') {
+		document.getElementById(chapterName).getElementsByClassName("counter")[0].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[1].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[2].style.visibility = "visible";
+		let myChart8 = document.getElementById('myChart8').getContext('2d');
+		let massPopChart8 = new Chart(myChart8, {
+	type:'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+	data:{
+		labels:['2013', '2014', '2015', '2016', '2017', '2018', '2019'],
+		datasets:[{
+			label:'Ratio',
+			data:[
+				0.3072,
+				0.3181,
+				0.2511,
+				0.3406,
+				0.8348,
+				0.5769,
+				0.4433
+			],
+			pointBackgroundColor: 'white',
+			backgroundColor:[
+				'#F26430'
+			],
+			borderWidth:1,
+			borderColor:'#777',
+			hoverBorderWidth:3,
+			hoverBorderColor:'#000'
+		}]
+	},
+	options:{
+    scales: {
+      xAxes: [{
+          ticks: {
+              fontFamily: 'IBM Plex Serif',
+              fontColor: 'white',
+              fontSize: 10
+          },
+      }],
+      yAxes: [{
+          ticks: {
+            fontFamily: 'IBM Plex Serif',
+            fontColor: 'white',
+            fontSize: 10
+          },
+      }],
+    },
+		title:{
+			display:true,
+			text:'RATIO OF DEATHS TO CASES IN REGION VI',
+			fontSize:25
+		},
+		layout:{
+			padding:{
+				left:0,
+				right:0,
+				bottom:0,
+				top:0
+			}
+		},
+		tooltips:{
+			enabled:true
+		}
+	}
+});
+	};
+
+	if (chapterName === 'r7') {
+		document.getElementById(chapterName).getElementsByClassName("counter")[0].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[1].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[2].style.visibility = "visible";
+		let myChart9 = document.getElementById('myChart9').getContext('2d');
+		let massPopChart9 = new Chart(myChart9, {
+	type:'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+	data:{
+		labels:['2013', '2014', '2015', '2016', '2017', '2018', '2019'],
+		datasets:[{
+			label:'Ratio',
+			data:[
+				0.3596,
+				0.3960,
+				0.6032,
+				0.8815,
+				0.8664,
+				0.6190,
+				0.5937
+			],
+			pointBackgroundColor: 'white',
+			backgroundColor:[
+				'#F26430'
+			],
+			borderWidth:1,
+			borderColor:'#777',
+			hoverBorderWidth:3,
+			hoverBorderColor:'#000'
+		}]
+	},
+	options:{
+    scales: {
+      xAxes: [{
+          ticks: {
+              fontFamily: 'IBM Plex Serif',
+              fontColor: 'white',
+              fontSize: 10
+          },
+      }],
+      yAxes: [{
+          ticks: {
+            fontFamily: 'IBM Plex Serif',
+            fontColor: 'white',
+            fontSize: 10
+          },
+      }],
+    },
+		title:{
+			display:true,
+			text:'RATIO OF DEATHS TO CASES IN REGION VII',
+			fontSize:25
+		},
+		layout:{
+			padding:{
+				left:0,
+				right:0,
+				bottom:0,
+				top:0
+			}
+		},
+		tooltips:{
+			enabled:true
+		}
+	}
+});
+	};
+
+	if (chapterName === 'r8') {
+		document.getElementById(chapterName).getElementsByClassName("counter")[0].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[1].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[2].style.visibility = "visible";
+		let myChart10 = document.getElementById('myChart10').getContext('2d');
+		let massPopChart10 = new Chart(myChart10, {
+	type:'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+	data:{
+		labels:['2013', '2014', '2015', '2016', '2017', '2018', '2019'],
+		datasets:[{
+			label:'Ratio',
+			data:[
+				0.3200,
+				0.4008,
+				0.2486,
+				0.5303,
+				0.5601,
+				0.5323,
+				0.2872
+			],
+			pointBackgroundColor: 'white',
+			backgroundColor:[
+				'#F26430'
+			],
+			borderWidth:1,
+			borderColor:'#777',
+			hoverBorderWidth:3,
+			hoverBorderColor:'#000'
+		}]
+	},
+	options:{
+    scales: {
+      xAxes: [{
+          ticks: {
+              fontFamily: 'IBM Plex Serif',
+              fontColor: 'white',
+              fontSize: 10
+          },
+      }],
+      yAxes: [{
+          ticks: {
+            fontFamily: 'IBM Plex Serif',
+            fontColor: 'white',
+            fontSize: 10
+          },
+      }],
+    },
+		title:{
+			display:true,
+			text:'RATIO OF DEATHS TO CASES IN REGION VIII',
+			fontSize:25
+		},
+		layout:{
+			padding:{
+				left:0,
+				right:0,
+				bottom:0,
+				top:0
+			}
+		},
+		tooltips:{
+			enabled:true
+		}
+	}
+});
+	};
+
+	if (chapterName === 'r9') {
+		document.getElementById(chapterName).getElementsByClassName("counter")[0].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[1].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[2].style.visibility = "visible";
+		let myChart11 = document.getElementById('myChart11').getContext('2d');
+		let massPopChart11 = new Chart(myChart11, {
+	type:'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+	data:{
+		labels:['2013', '2014', '2015', '2016', '2017', '2018', '2019'],
+		datasets:[{
+			label:'Ratio',
+			data:[
+				0.7048,
+				0.4145,
+				0.3151,
+				0.5354,
+				0.5861,
+				0.9989,
+				0.5080
+			],
+			pointBackgroundColor: 'white',
+			backgroundColor:[
+				'#F26430'
+			],
+			borderWidth:1,
+			borderColor:'#777',
+			hoverBorderWidth:3,
+			hoverBorderColor:'#000'
+		}]
+	},
+	options:{
+    scales: {
+      xAxes: [{
+          ticks: {
+              fontFamily: 'IBM Plex Serif',
+              fontColor: 'white',
+              fontSize: 10
+          },
+      }],
+      yAxes: [{
+          ticks: {
+            fontFamily: 'IBM Plex Serif',
+            fontColor: 'white',
+            fontSize: 10
+          },
+      }],
+    },
+		title:{
+			display:true,
+			text:'RATIO OF DEATHS TO CASES IN REGION IX',
+			fontSize:25
+		},
+		layout:{
+			padding:{
+				left:0,
+				right:0,
+				bottom:0,
+				top:0
+			}
+		},
+		tooltips:{
+			enabled:true
+		}
+	}
+});
+	};
+
+	if (chapterName === 'r10') {
+		document.getElementById(chapterName).getElementsByClassName("counter")[0].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[1].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[2].style.visibility = "visible";
+		let myChart12 = document.getElementById('myChart12').getContext('2d');
+		let massPopChart12 = new Chart(myChart12, {
+	type:'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+	data:{
+		labels:['2013', '2014', '2015', '2016', '2017', '2018', '2019'],
+		datasets:[{
+			label:'Ratio',
+			data:[
+				0.9140,
+				0.5531,
+				0.4271,
+				0.4098,
+				0.3598,
+				0.4729,
+				0.3814
+			],
+			pointBackgroundColor: 'white',
+			backgroundColor:[
+				'#F26430'
+			],
+			borderWidth:1,
+			borderColor:'#777',
+			hoverBorderWidth:3,
+			hoverBorderColor:'#000'
+		}]
+	},
+	options:{
+    scales: {
+      xAxes: [{
+          ticks: {
+              fontFamily: 'IBM Plex Serif',
+              fontColor: 'white',
+              fontSize: 10
+          },
+      }],
+      yAxes: [{
+          ticks: {
+            fontFamily: 'IBM Plex Serif',
+            fontColor: 'white',
+            fontSize: 10
+          },
+      }],
+    },
+		title:{
+			display:true,
+			text:'RATIO OF DEATHS TO CASES IN REGION X',
+			fontSize:25
+		},
+		layout:{
+			padding:{
+				left:0,
+				right:0,
+				bottom:0,
+				top:0
+			}
+		},
+		tooltips:{
+			enabled:true
+		}
+	}
+});
+	};
+
+	if (chapterName === 'r11') {
+		document.getElementById(chapterName).getElementsByClassName("counter")[0].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[1].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[2].style.visibility = "visible";
+		let myChart13 = document.getElementById('myChart13').getContext('2d');
+		let massPopChart13 = new Chart(myChart13, {
+	type:'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+	data:{
+		labels:['2013', '2014', '2015', '2016', '2017', '2018', '2019'],
+		datasets:[{
+			label:'Ratio',
+			data:[
+				0.5695,
+				0.5140,
+				0.4153,
+				0.8057,
+				0.7040,
+				0.3217,
+				0.5188
+			],
+			pointBackgroundColor: 'white',
+			backgroundColor:[
+				'#F26430'
+			],
+			borderWidth:1,
+			borderColor:'#777',
+			hoverBorderWidth:3,
+			hoverBorderColor:'#000'
+		}]
+	},
+	options:{
+    scales: {
+      xAxes: [{
+          ticks: {
+              fontFamily: 'IBM Plex Serif',
+              fontColor: 'white',
+              fontSize: 10
+          },
+      }],
+      yAxes: [{
+          ticks: {
+            fontFamily: 'IBM Plex Serif',
+            fontColor: 'white',
+            fontSize: 10
+          },
+      }],
+    },
+		title:{
+			display:true,
+			text:'RATIO OF DEATHS TO CASES IN REGION XI',
+			fontSize:25
+		},
+		layout:{
+			padding:{
+				left:0,
+				right:0,
+				bottom:0,
+				top:0
+			}
+		},
+		tooltips:{
+			enabled:true
+		}
+	}
+});
+	};
+
+	if (chapterName === 'r12') {
+		document.getElementById(chapterName).getElementsByClassName("counter")[0].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[1].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[2].style.visibility = "visible";
+		let myChart14 = document.getElementById('myChart14').getContext('2d');
+		let massPopChart14 = new Chart(myChart14, {
+	type:'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+	data:{
+		labels:['2013', '2014', '2015', '2016', '2017', '2018', '2019'],
+		datasets:[{
+			label:'Ratio',
+			data:[
+				0.5205,
+				0.5520,
+				0.3234,
+				0.4293,
+				0.3923,
+				0.3686,
+				0.3951
+			],
+			pointBackgroundColor: 'white',
+			backgroundColor:[
+				'#F26430'
+			],
+			borderWidth:1,
+			borderColor:'#777',
+			hoverBorderWidth:3,
+			hoverBorderColor:'#000'
+		}]
+	},
+	options:{
+    scales: {
+      xAxes: [{
+          ticks: {
+              fontFamily: 'IBM Plex Serif',
+              fontColor: 'white',
+              fontSize: 10
+          },
+      }],
+      yAxes: [{
+          ticks: {
+            fontFamily: 'IBM Plex Serif',
+            fontColor: 'white',
+            fontSize: 10
+          },
+      }],
+    },
+		title:{
+			display:true,
+			text:'RATIO OF DEATHS TO CASES IN REGION XII',
+			fontSize:25
+		},
+		layout:{
+			padding:{
+				left:0,
+				right:0,
+				bottom:0,
+				top:0
+			}
+		},
+		tooltips:{
+			enabled:true
+		}
+	}
+});
+	};
+
+	if (chapterName === 'rcaraga') {
+		document.getElementById(chapterName).getElementsByClassName("counter")[0].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[1].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[2].style.visibility = "visible";
+		let myChart15 = document.getElementById('myChart15').getContext('2d');
+		let massPopChart15 = new Chart(myChart15, {
+	type:'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+	data:{
+		labels:['2013', '2014', '2015', '2016', '2017', '2018', '2019'],
+		datasets:[{
+			label:'Ratio',
+			data:[
+				0.8071,
+				0.4990,
+				0.6118,
+				0.5077,
+				0.4853,
+				0.3557,
+				0.2250
+			],
+			pointBackgroundColor: 'white',
+			backgroundColor:[
+				'#F26430'
+			],
+			borderWidth:1,
+			borderColor:'#777',
+			hoverBorderWidth:3,
+			hoverBorderColor:'#000'
+		}]
+	},
+	options:{
+    scales: {
+      xAxes: [{
+          ticks: {
+              fontFamily: 'IBM Plex Serif',
+              fontColor: 'white',
+              fontSize: 10
+          },
+      }],
+      yAxes: [{
+          ticks: {
+            fontFamily: 'IBM Plex Serif',
+            fontColor: 'white',
+            fontSize: 10
+          },
+      }],
+    },
+		title:{
+			display:true,
+			text:'RATIO OF DEATHS TO CASES IN CARAGA',
+			fontSize:25
+		},
+		layout:{
+			padding:{
+				left:0,
+				right:0,
+				bottom:0,
+				top:0
+			}
+		},
+		tooltips:{
+			enabled:true
+		}
+	}
+});
+	};
+
+	if (chapterName === 'rarmm') {
+		document.getElementById(chapterName).getElementsByClassName("counter")[0].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[1].style.visibility = "visible";
+		document.getElementById(chapterName).getElementsByClassName("counter")[2].style.visibility = "visible";
+		let myChart16 = document.getElementById('myChart16').getContext('2d');
+		let massPopChart16 = new Chart(myChart16, {
+	type:'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+	data:{
+		labels:['2013', '2014', '2015', '2016', '2017', '2018', '2019'],
+		datasets:[{
+			label:'Ratio',
+			data:[
+				0.7519,
+				0.6662,
+				0.8921,
+				1.2690,
+				0.4405,
+				1.0575,
+				0.7523
+			],
+			pointBackgroundColor: 'white',
+			backgroundColor:[
+				'#F26430'
+			],
+			borderWidth:1,
+			borderColor:'#777',
+			hoverBorderWidth:3,
+			hoverBorderColor:'#000'
+		}]
+	},
+	options:{
+    scales: {
+      xAxes: [{
+          ticks: {
+              fontFamily: 'IBM Plex Serif',
+              fontColor: 'white',
+              fontSize: 10
+          },
+      }],
+      yAxes: [{
+          ticks: {
+            fontFamily: 'IBM Plex Serif',
+            fontColor: 'white',
+            fontSize: 10
+          },
+      }],
+    },
+		title:{
+			display:true,
+			text:'RATIO OF DEATHS TO CASES IN ARMM',
+			fontSize:25
+		},
+		layout:{
+			padding:{
+				left:0,
+				right:0,
+				bottom:0,
+				top:0
+			}
+		},
+		tooltips:{
+			enabled:true
+		}
+	}
+});
+	};
+	//end of activechapter function
+	}
+
+function isElementOnScreen(id) {
+    var element = document.getElementById(id);
+    var bounds = element.getBoundingClientRect();
+    return bounds.top < window.innerHeight && bounds.bottom > 0;
+}
+//End of function to run the story
+
+</script>
+</body>
+</html>
